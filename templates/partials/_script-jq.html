@@ -1,0 +1,14 @@
+<script>
+    $(document).ready(function(){
+        $('#form-clientes').hide()
+        $("#cadastro").click(function(){
+            $("#form-clientes").toggle("easing");
+        });
+        $("#editar").click(function(){
+            $("#form-clientes").toggle("easing");
+        });
+        $('#btnCancela').click(function(){
+            $('#form-clientes').hide("easing")
+        });
+    });
+</script>

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'partials/_menu.html' %}
+    <div class="container mt-3">
+        {% include 'partials/_alertas.html' %}
+        <form action="{% url 'cadastra_cliente' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="table">
+                <tr>
+                    <td colspan="2">
+                        <label class="form-label" for="nome">Nome</label>
+                        <input class="form-control" type="text" name="nome" required>
+                    </td>
+                    <td>
+                        <label class="form-label" for="telefone">Telefone</label>
+                        <input class="form-control" type="tel" name="telefone" placeholder="2199999-9999" pattern="[0-9]{2}[0-9}{5}-[0-9]{4}" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="form-label" for="nascimento">Data de nascimento</label>
+                        <input class="form-control" type="date" name="nascimento" required>
+                    </td>
+                    <td>
+                        <label class="form-label" for="altura">Altura</label>
+                        <input class="form-control" type="text" name="altura" required>
+                    </td>
+                    <td>
+                        <label class="form-label" for="peso">Peso</label>
+                        <input class="form-control" type="number" name="peso" min="1" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label class="form-label" for="endereco">Endereço</label>
+                        <input class="form-control" type="text" name="endereco" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="form-label" for="observacao">Observação</label>
+                        <textarea name="observacao" cols="70" rows="10"></textarea>
+                    </td>
+                    <td>
+                        <label for="foto" class="from-label">Foto</label>
+                        <input class="form-control btn border-secondary" type="file" name="foto">
+                        <img class="w-75 mt-1 img-thumbnail" src="{% static 'img/perfil.png' %}" alt="Foto do cliente">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <input class="btn btn-danger" type="submit" value="Salvar">
+                        <input class="btn btn-danger" type="reset" value="Limpar">
+                        <a href="{% url 'clientes' %}" class="btn btn-danger">Cancelar</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}

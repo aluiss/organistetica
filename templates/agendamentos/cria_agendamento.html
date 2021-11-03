@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'partials/_menu.html' %}
+    <div class="container mt-3">
+        {% include 'partials/_alertas.html' %}
+        <form action="{% url 'cria_agendamento' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="table">
+                <tr>
+                    <td colspan="3">
+                        <label class="form-label" for="cliente">Cliente:</label>
+                        <select  class="form-select" name="cliente">
+                            {% for cliente in clientes %}
+                                <option class="text-danger" value="{{cliente.id}}">
+                                    {{ cliente.nome }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <label class="form-label" for="cor">Cor</label>
+                        <input type="color" name="cor" class="form-control form-control-color">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="form-label" for="procedimento">Procedimento</label>
+                        <select class="form-select" name="procedimento">
+                            {% for procedimento in procedimentos %}
+                                <option value=" {{procedimento.id}} ">
+                                    {{procedimento.procedimento}}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td colspan="3">
+                        <label class="form-label" for="local">Local</label>
+                        <select name="local" class="form-select">
+                            {% for local in locais %}
+                                <option value="{{local.id}}" class="text-danger">
+                                    {{local.local}}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    
+                    <td colspan="2">
+                        <label class="form-label" for="data">Data</label>
+                        <input type="date" name="data" class="form-control">
+                    </td>
+                    <td>
+                        <label class="form-label" for="hora">Hora</label>
+                        <input type="time" name="hora" class="form-control">
+                    </td>
+                    <td style="max-width: 30px;">
+                        <label class="form-label" for="sessoes">Seções</label>
+                        <input class="form-control" type="number" name="sessoes" min="1" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label class="form-label" for="observacao">Observação</label>
+                        <textarea name="observacao" id="" cols="30" rows="10" class="form-control"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <input type="submit" value="Agendar" class="btn btn-danger">
+                        <input type="reset" value="Limpar" class="btn btn-danger">
+                        <a href="{% url 'agendamentos' %}" class="btn btn-danger">Cancelar</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'partials/_menu.html' %}
+<div class="container mt-3">
+    {% include 'partials/_alertas.html' %}
+    <div class="container mt-3">
+        <form action="{% url 'atualiza_cliente' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="table">
+                <tr>
+                    <td colspan="2">
+                        <input type="text" name="id_cliente" value="{{cliente.id}}" hidden>
+
+                        <label class="form-label" for="nome">Nome</label>
+                        <input class="form-control" type="text" name="nome" value="{{cliente.nome}}">
+                    </td>
+                    <td>
+                        <label class="form-label" for="telefone">Telefone</label>
+                        <input class="form-control" type="text" name="telefone" value="{{ cliente.telefone }}" placeholder="2199999-9999" pattern="[0-9]{2}[0-9]{5}-[0-9]{4}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="form-label" for="nascimento">Data de nascimento</label>
+                        <input class="form-control" type="date" name="nascimento" value="{{cliente.data_nascimento|date:'Y-m-d'}}">
+                    </td>
+                    <td>
+                        <label class="form-label" for="altura">Altura</label>
+                        <input class="form-control" type="text" name="altura" value="{{cliente.altura}}">
+                    </td>
+                    <td>
+                        <label class="form-label" for="peso">Peso</label>
+                        <input class="form-control" type="number" name="peso" min="1" value="{{cliente.peso}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label class="form-label" for="endereco">Endereço</label>
+                        <input class="form-control" type="text" name="endereco" value="{{cliente.endereco}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="form-label" for="observacao">Observação</label>
+                        </br>
+                        <textarea name="observacao" cols="70" rows="10">{{cliente.obs}}</textarea>
+                    </td>
+                    <td>
+                        <input class="form-control-file" type="file" name="foto">
+                        </br>
+                        <img class="w-75 mt-1 img-thumbnail" src="{{ cliente.foto.url }}" alt="Foto do cliente">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <input class="btn btn-danger" type="submit" value="Salvar">
+                        <input class="btn btn-danger" type="reset" value="Limpar">
+                        <a class="btn btn-danger" href="{% url 'clientes' %}">Cancelar</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+{% endblock %}

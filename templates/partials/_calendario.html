@@ -1,0 +1,102 @@
+{% load static %}
+
+<!-- Calendário e lista de clientes agendados por data -->
+<section>
+    <div class="container-lg">
+        <div class="container-fluid d-md-flex justify-content-between">
+            <aside class="flex-fill">
+                <div id="calendar"></div>
+            </aside>
+            <!-- Lista de clientes agendados -->
+            <aside class="flex-fill ms-2" id="acord">
+                <form action=" {% url 'index' %} ">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Digite o nome da(o) cliente..." name="pesquisa_agendamentos">
+                    <button class="btn btn-danger" type="submit">Pesquisar</button>
+                </div>
+                <div class="accordion" id="accordionUI">
+                    {% if dados %}
+                        {% for evento in dados %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingAcor{{cliente.id}}">
+                                <button class="accordion-button bg-danger text-light fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAcor{{ evento.id}}" aria-expanded="true" aria-controls="collapseAcor{{ evento.id}}">
+                                    {{ evento.cliente|upper }}
+                                </button>
+                            </h2>
+                            <div id="collapseAcor{{evento.id}}" class="accordion-collapse collapse" aria-labelledby="headingAcor{{evento.id}}" data-bs-parent="#accordionUI">
+                                <table class="table">
+                                    <tr>
+                                        <td rowspan="4" class="w-50">
+                                            {% if evento.cliente.foto == '' %}
+                                                <img class="" src="{% static 'img/perfil.png' %}" alt="Fotografia" class="img-fluid rounded-start">
+                                            {% else %}
+                                                <img class="img-fluid rounded img-thumbnail" src="{{ evento.cliente.foto.url }}" alt="Fotografia" class="img-fluid rounded-start">
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle"><i class="fas fa-calendar-day text-danger"></i> <b>{{ evento.start|date:"d/m/Y" }}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle"><i class="far fa-clock text-danger"></i> <b>{{evento.hora}}hs</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle"><i class="fas fa-map-marker-alt text-danger"></i> <b>{{evento.local}}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="align-middle"><i class="fas fa-procedures text-danger"></i> <b>{{evento.procedimento}}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="align-middle text-muted"><i class="fas fa-comment-alt text-danger"></i> <b>{{evento.obs_agenda}}</b></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div>
+                            <h4 class="text-danger">Nenhuma agendamento encontrado.</h4>
+                        </div>
+                    {% endif %}
+                </div>
+                </form>
+                {% include 'partials/_paginacao.html' %}
+            </aside>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            var calendarUI = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarUI,{
+                themeSystem: 'bootstrap',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                },
+                locale: 'pt-BR',
+                timeZone: 'America/Sao_Paulo',
+                eventTimeFormat: {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                },
+                navLinks: true,
+                editable: true,
+                events:[
+                    {% if agendamentos %}
+                        {% for evento in agendamentos %}
+                            {
+                                title: '{{ evento.cliente }}',
+                                start: '{{evento.start|date:"Y-m-d"}} {{evento.hora}}',
+                                color: '{{ evento.cor }}',
+                            },
+                        {% endfor %}
+                    {% else %}
+                    {% endif %}
+                ]
+            });
+            calendar.render();
+        });
+    </script>
+</section>

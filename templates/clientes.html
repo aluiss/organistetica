@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'partials/_menu.html' %}
+    <div class="container mt-3">
+        <nav class="mb-3">
+            <a href="{% url 'index' %}"><i class="btn btn-danger fas fa-home fa-2x"></i></a>
+            <a href="{% url 'cadastra_cliente' %}" class="btn btn-danger p-2 fw-bold">NOVO CLIENTE</a>
+        </nav>
+        {% include 'partials/_alertas.html' %}
+        <form action="{% url 'clientes' %}">
+            <table class="table table-hover">
+                <thead class="table-danger text-danger">
+                    <div class="input-group mb-1">
+                        <input class="form-control" type="text" name="pesquisa_clientes" id="pesquisar" placeholder="Digite o nome da(o) cliente...">
+                        <input class="btn btn-danger" type="submit" value="Pesquisar">
+                    </div>
+                    <tr>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Nascimento</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Peso</th>
+                        <th scope="col">Endereço</th>
+                        <th scope="col">Observação</th>
+                        <th scope="col" class="align-center">Ações</th>
+                    </tr>
+                </thead>
+                {% for cliente in dados %}
+                <tbody>
+                    <tr>
+                        {% if cliente.foto == '' %}
+                            <td scope="row"><img src="{% static 'img/perfil.png' %}" style="max-width: 150px; " alt="Foto do cliente" class="img-fluid img-thumbnail"></td>
+                        {% else %}
+                            <td scope="row"><img src="{{ cliente.foto.url }}" style="max-width: 150px;" alt="Foto do cliente" class="img-fluid img-thumbnail"></td>
+                        {% endif %}
+                        <td scope="row" class="align-middle">{{cliente.nome}}</td>
+                        <td scope="row" class="align-middle">{{cliente.data_nascimento|date:"d/m/Y"}}</td>
+                        <td scope="row" class="align-middle">{{cliente.telefone}}</td>
+                        <td scope="row" class="align-middle">{{cliente.peso}}</td>
+                        <td scope="row" class="align-middle">{{cliente.endereco}}</td>
+                        <td scope="row" class="align-middle">{{cliente.obs}}</td>
+                        <td scope="row" class="align-middle">
+                            <a href="{% url 'deleta_cliente' cliente.id %}" type="button" class="btn btn-danger mb-1">Deletar</a>
+                            <a href="{% url 'edita_cliente' cliente.id %}" type="button" class="btn btn-secondary">Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </form>
+        {% include 'partials/_paginacao.html' %}
+    </div>
+{% endblock %}
