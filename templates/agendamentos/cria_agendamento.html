@@ -12,6 +12,7 @@
                     <td colspan="3">
                         <label class="form-label" for="cliente">Cliente:</label>
                         <select  class="form-select" name="cliente">
+                            <option>Selecione a(o) cliente</option>
                             {% for cliente in clientes %}
                                 <option class="text-danger" value="{{cliente.id}}">
                                     {{ cliente.nome }}
@@ -28,8 +29,9 @@
                     <td>
                         <label class="form-label" for="procedimento">Procedimento</label>
                         <select class="form-select" name="procedimento">
+                            <option>Selecione o procedimento</option>
                             {% for procedimento in procedimentos %}
-                                <option value=" {{procedimento.id}} ">
+                                <option>
                                     {{procedimento.procedimento}}
                                 </option>
                             {% endfor %}
@@ -38,6 +40,7 @@
                     <td colspan="3">
                         <label class="form-label" for="local">Local</label>
                         <select name="local" class="form-select">
+                            <option>Selecione o local</option>
                             {% for local in locais %}
                                 <option value="{{local.id}}" class="text-danger">
                                     {{local.local}}

@@ -23,8 +23,8 @@
                     <div class="card mt-2">
                         <h5 class="card-header bg-secundary" name="cliente">{{agendamento.cliente}}</h5>
                     {% else %}
-                    <div class="card border-danger mt-2">
-                            <h5 class="card-header bg-danger text-light">{{agendamento.cliente}}</h5>
+                    <div class="card mt-2 border-danger">
+                            <h5 class="card-header text-light bg-danger">{{agendamento.cliente}}</h5>
                     {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">
@@ -54,6 +54,7 @@
                         {% else %}
                         <div class="card-footer bg-transparent border-danger">
                             <a href=" {% url 'cancela_agendamento' agendamento.id %} " class="btn btn-danger">CANCELAR</a>
+                            <a href="{% url 'altera_agendamento' agendamento.id %}" class="btn btn-danger">ALTERAR</a>
                         {% endif %}
                         </div>
                     </div>

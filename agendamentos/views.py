@@ -81,6 +81,46 @@ def cria_agendamento(request):
 def campo_vazio(campo):
     return not campo.strip()
 
+def altera_agendamento(request, agendamento_id):
+    clientes = Clientes.objects.all()
+    procedimentos = Procedimento.objects.all()
+    locais = LocaisAtendimento.objects.all()
+    agendamentos = Agendamento.objects.filter(pk=agendamento_id)
+    dados = {
+        'agendamentos' : agendamentos,
+        'clientes' : clientes,
+        'procedimentos' : procedimentos,
+        'locais_atendimento' : locais
+        }
+    return render(request, 'agendamentos/altera_agendamento.html', dados)
+
+def atualiza_agendamento(request):
+    cliente_id = Clientes.objects.values("id").filter(nome=request.POST['cliente'])
+    procedimento_id = Procedimento.objects.values("id").filter(procedimento=request.POST['procedimento'])
+    local_id = LocaisAtendimento.objects.values("id").filter(local=request.POST['local'])
+
+    if not cliente_id.exists():
+        messages.error(request, 'Cliente não encontrado.')
+    if not procedimento_id.exists():
+        messages.error(request, 'Procedimento não cadastrado.')
+    if not local_id.exists():
+        messages.error(request, 'Local não cadastrado.')
+    if request.method == 'POST':
+        agendamento_id = request.POST['id_agendamento']
+        agendamento = Agendamento.objects.get(pk=agendamento_id)
+        agendamento.cliente_id = cliente_id
+        agendamento.cor = request.POST['cor']
+        agendamento.procedimento_id = procedimento_id
+        agendamento.local_atendimento_id = local_id
+        agendamento.start = request.POST['data']
+        agendamento.hora = request.POST['hora']
+        agendamento.sessoes = request.POST['sessoes']
+        agendamento.obs_agenda = request.POST['observacao']
+        agendamento.save()
+
+    messages.success(request, 'Agendamento alterado!')
+    return redirect('agendamentos')
+
 def cancela_agendamento(request, agendamento_id):
     agendamento = get_object_or_404(Agendamento, pk=agendamento_id)
     agendamento.cancelado = True

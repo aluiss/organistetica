@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'partials/_menu.html' %}
+    <div class="container mt-3">
+        
+        <nav class="mb-3">
+            <a href="{% url 'index' %}"><i class="btn btn-danger fas fa-home fa-2x"></i></a>
+            {% include 'partials/_alertas.html' %}
+        </nav>
+        <form action="{% url 'atualiza_agendamento' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="table">
+                {% for agendamento in agendamentos %}
+                <input type="hidden" name="id_agendamento" value="{{ agendamento.id}}">
+                <tr>
+                    <td colspan="3">
+                        <label class="form-label" for="cliente">Cliente:</label>
+                        <select class="form-select" name="cliente">
+                            <option> {{agendamento.cliente}} </option>
+                            <option> {{agendamento.cliente__id}} </option>
+                            {% for cliente in clientes %}
+                                <option value=""> {{cliente.nome}} </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <label class="form-label" for="cor">Cor</label>
+                        <input type="color" name="cor" class="form-control form-control-color" value="{{ agendamento.cor }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="form-label" for="procedimento">Procedimento</label>
+                        <select class="form-select" name="procedimento">
+                            <option>{{ agendamento.procedimento }}</option>
+                            {% for procedimento in procedimentos %}
+                                <option> {{procedimento.procedimento}} </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td colspan="3">
+                        <label class="form-label" for="local">Local</label>
+                        <select class="form-select" name="local">
+                            <option> {{agendamento.local_atendimento}} </option>
+                            {% for local in locais_atendimento %}
+                                <option>{{ local.local }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label class="form-label" for="data">Data</label>
+                        <input type="date" name="data" class="form-control" value="{{ agendamento.start|date:'Y-m-d' }}">
+                    </td>
+                    <td>
+                        <label class="form-label" for="hora">Hora</label>
+                        <input type="time" name="hora" class="form-control" value="{{ agendamento.hora }}">
+                    </td>
+                    <td style="max-width: 30px;">
+                        <label class="form-label" for="sessoes">Seções</label>
+                        <input class="form-control" type="number" name="sessoes" min="1" value="{{ agendamento.sessoes }}">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <label class="form-label" for="observacao">Observação</label>
+                        <textarea name="observacao" id="" cols="30" rows="10" class="form-control"> {{agendamento.obs_agenda}} </textarea>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="4">
+                        <input type="submit" value="Alterar" class="btn btn-danger">
+                        <input type="reset" value="Resetar" class="btn btn-danger">
+                        <a href="{% url 'atualiza_agendamento' %}" class="btn btn-danger">Cancelar</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}

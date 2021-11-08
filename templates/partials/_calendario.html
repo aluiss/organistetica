@@ -26,11 +26,11 @@
                             <div id="collapseAcor{{evento.id}}" class="accordion-collapse collapse" aria-labelledby="headingAcor{{evento.id}}" data-bs-parent="#accordionUI">
                                 <table class="table">
                                     <tr>
-                                        <td rowspan="4" class="w-50">
+                                        <td rowspan="6" class="w-50">
                                             {% if evento.cliente.foto == '' %}
-                                                <img class="" src="{% static 'img/perfil.png' %}" alt="Fotografia" class="img-fluid rounded-start">
+                                                <img class="img-fluid rounded img-thumbnail" src="{% static 'img/perfil.png' %}" alt="Fotografia">
                                             {% else %}
-                                                <img class="img-fluid rounded img-thumbnail" src="{{ evento.cliente.foto.url }}" alt="Fotografia" class="img-fluid rounded-start">
+                                                <img class="img-fluid rounded img-thumbnail" src="{{ evento.cliente.foto.url }}" alt="Fotografia">
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -41,7 +41,7 @@
                                         <td class="align-middle"><i class="far fa-clock text-danger"></i> <b>{{evento.hora}}hs</b></td>
                                     </tr>
                                     <tr>
-                                        <td class="align-middle"><i class="fas fa-map-marker-alt text-danger"></i> <b>{{evento.local}}</b></td>
+                                        <td class="align-middle"><i class="fas fa-map-marker-alt text-danger"></i> <b>{{evento.local_atendimento}}</b></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" class="align-middle"><i class="fas fa-procedures text-danger"></i> <b>{{evento.procedimento}}</b></td>
