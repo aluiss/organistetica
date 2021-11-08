@@ -33,8 +33,8 @@
                             <img class="card-img-top" src="{{ cliente.foto.url }}" alt="Fotografia">
                         {% endif %}
                         <h5 class="card-header text-danger">{{ cliente.nome }}</h5>
-                        <ul class="list-group list-striped">
-                            <li class="list-group-item list-group-item-action"><i class="fas fa-user-clock"></i> {{ idade }} anos </li>
+                        <ul class="list-group">
+                            <li class="list-group-item"><i class="fas fa-user-clock"></i> {{ idade }} anos </li>
                             <li class="list-group-item list-group-item-action"><i class="fas fa-ruler-vertical"></i> {{ cliente.altura|floatformat:2 }}m</li>
                             <li class="list-group-item list-group-item-action"><i class="fas fa-weight"></i> {{ cliente.peso|floatformat:2 }}kg</li>
                             <li class="list-group-item list-group-item-action"><i class="fas fa-calendar-day"></i> {{ cliente.data_nascimento }}</li>
