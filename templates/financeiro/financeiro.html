@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'partials/_menu.html' %}
+<div class="container">
+    <nav class="mb-3">
+        <a href="{% url 'index' %}"><i class="btn btn-danger fas fa-home fa-2x"></i></a>
+        <a href="#" class="btn btn-danger p-2 fw-bold">SERVIÇOS</a>
+        <a href="#" class="btn btn-danger p-2 fw-bold">PACOTES</a>
+    </nav>
+    <div class="nav text-center">
+        <div class="card bg-success me-2 fw-bold nav-fill flex-fill">
+            <div class="card-header text-white">Recebido ano</div>
+            <div class="card-body">
+                <h3 class="card-title text-white">R$10.000,00</h3>
+            </div>
+        </div>
+        <div class="card bg-info me-2 fw-bold nav-fill flex-fill">
+            <div class="card-header text-white">A receber ano</div>
+            <div class="card-body">
+                <h3 class="card-title text-white">R$5.000,00</h3>
+            </div>
+        </div>
+        <div class="card bg-success me-2 fw-bold nav-fill flex-fill">
+            <div class="card-header text-white">Recebido mês</div>
+            <div class="card-body">
+                <h3 class="card-title text-white">R$900,00</h3>
+            </div>
+        </div>
+        <div class="card bg-info me-2 fw-bold nav-fill flex-fill">
+            <div class="card-header text-white">A receber mês</div>
+            <div class="card-body">
+                <h3 class="card-title text-white">R$2.500,00</h3>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>SERVIÇOS</th>
+                    <th class="text-center">Valor</th>
+                    <th class="text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for procedimento in procedimentos %}
+                <tr>
+                    <td class="align-middle"> {{ procedimento.procedimento }} </td>
+                    <td class="align-middle text-center"> R$ {{ procedimento.valor|floatformat:2}} </td>
+                    <td class="align-middle text-center">
+                        <a class="btn btn-info" href="#">ALTERAR</a>
+                        <a class="btn btn-danger" href="#">EXCLUIR</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
