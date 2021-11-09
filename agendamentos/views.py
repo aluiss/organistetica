@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.messages.api import error
 from django.shortcuts import get_object_or_404, render, redirect
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.paginator import Paginator
 from .models import Agendamento
 from .models import Clientes
 from .models import LocaisAtendimento
@@ -34,7 +34,7 @@ def cria_agendamento(request):
     if request.method == 'POST':
         cliente = request.POST['cliente']
         cor = request.POST['cor']
-        procedimento = request.POST['procedimento']
+        procedimento = Procedimento.objects.values('id').filter(procedimento=request.POST['procedimento'])
         local = request.POST['local']
         data = request.POST['data']
         hora = request.POST['hora']
