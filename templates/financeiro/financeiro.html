@@ -12,7 +12,11 @@
             <div class="card-header text-white"> SALDO ANUAL</div>
             <div class="card-body row">
                 <div class="col">
-                    <h3 class="card-title text-white fw-bold">R$10.000,00</h3>
+                    <h3 class="card-title text-white fw-bold">
+                        {% if vendas_ano %}
+                            R$ {{vendas_ano.valor__sum}}
+                        {% endif %}
+                    </h3>
                     <h6 class="text-white">Recebido</h6>
                 </div>
                 <div class="col">
@@ -25,7 +29,11 @@
             <div class="card-header text-white">SALDO MENSAL</div>
             <div class="card-body row">
                 <div class="col">
-                    <h3 class="card-title text-white fw-bold">R$900,00</h3>
+                    <h3 class="card-title text-white fw-bold">
+                        {% if vendas_mes %}
+                            R$ {{vendas_mes.valor__sum}}
+                        {% endif %}
+                    </h3>
                     <h6 class="text-white">Recebido</h6>
                 </div>
                 <div class="col">
@@ -69,14 +77,14 @@
         </table>
         <ul class="col-md-5">
             <li class="list-group-item list-group-item-action d-flex bg-danger border-danger active" aria-current="true">TOTAL/MÊS POR SERVIÇO</li>
-            {% if vendas %}
-                {% for venda in vendas %}
+            
+                {% for venda in vendas_serv_mes %}
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    {{venda.procedimento}}
-                    <span class="badge bg-danger">R${{vendas}}</span>
+                    {{venda.procedimento__procedimento}}
+                    <span class="badge bg-danger">R${{venda.valor__sum}}</span>
                 </li>
                 {% endfor %}
-            {% endif %}
+            
         </ul>
     </div>
 </div>

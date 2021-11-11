@@ -9,6 +9,7 @@ class Vendas(models.Model):
     cliente = models.TextField()
     data_venda = models.DateField(auto_now_add=True)
     hora_venda = models.TimeField(auto_now_add=True)
+    pago = models.BooleanField(default=False)
 
     def __str__(self):
         return self.procedimento.procedimento
