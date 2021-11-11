@@ -11,7 +11,7 @@
         <div class="card bg-success me-2 mb-2 nav-fill flex-fill shadow">
             <div class="card-header text-white"> SALDO ANUAL</div>
             <div class="card-body row">
-                <div class="col border-end">
+                <div class="col">
                     <h3 class="card-title text-white fw-bold">R$10.000,00</h3>
                     <h6 class="text-white">Recebido</h6>
                 </div>
@@ -24,7 +24,7 @@
         <div class="card bg-info me-2 mb-2 nav-fill flex-fill shadow">
             <div class="card-header text-white">SALDO MENSAL</div>
             <div class="card-body row">
-                <div class="col border-end">
+                <div class="col">
                     <h3 class="card-title text-white fw-bold">R$900,00</h3>
                     <h6 class="text-white">Recebido</h6>
                 </div>
@@ -50,8 +50,8 @@
                     <td class="align-middle"> {{ procedimento.procedimento }} </td>
                     <td class="align-middle text-center"> R$ {{ procedimento.valor|floatformat:2}} </td>
                     <td class="align-middle text-center">
-                        <a class="btn btn-info" href="#">ALTERAR</a>
-                        <a class="btn btn-danger" href="#">EXCLUIR</a>
+                        <a class="btn btn-info btn-sm" href="#"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-danger btn-sm" href="#"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -62,19 +62,21 @@
                         <div class="input-group">
                             <input class="form-control" type="text" name="servico" placeholder="Serviço">
                             <input class="form-control" type="text" name="valor" placeholder="Valor">
-                            <input class="btn btn-success input-grup-text" type="submit" value="ADICIONAR">
+                            <input class="btn btn-success btn-sm input-grup-text" type="submit" value="ADICIONAR">
                         </div>
                     </td>
                 </tr>
         </table>
         <ul class="col-md-5">
             <li class="list-group-item list-group-item-action d-flex bg-danger border-danger active" aria-current="true">TOTAL/MÊS POR SERVIÇO</li>
-            {% for procedimento in procedimentos %}
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                {{procedimento.procedimento}}
-                <span class="badge bg-danger">R${{procedimento.valor}}</span>
-            </li>
-            {% endfor %}
+            {% if vendas %}
+                {% for venda in vendas %}
+                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    {{venda.procedimento}}
+                    <span class="badge bg-danger">R${{vendas}}</span>
+                </li>
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
 </div>
