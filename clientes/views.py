@@ -57,7 +57,7 @@ def index(request):
         
         def vagas_hoje():
             hoje = date.today().day
-            vagas_hoje = 10 - Agendamento.objects.filter(start__day=hoje).count()
+            vagas_hoje = 10 - Agendamento.objects.filter(start__day=hoje, cancelado=False).count()
             return vagas_hoje
 
     dados = {
