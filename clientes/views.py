@@ -78,7 +78,7 @@ def clientes(request):
     clientes = Clientes.objects.all().order_by('nome')
 
     #Configuração da paginação da lista de clientes
-    paginator = Paginator(clientes, 10)
+    paginator = Paginator(clientes, 12)
     page = request.GET.get('page')
     clientes_por_pagina = paginator.get_page(page)
     

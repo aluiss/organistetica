@@ -9,46 +9,46 @@
             <a href="{% url 'cadastra_cliente' %}" class="btn btn-danger p-2 fw-bold">NOVO CLIENTE</a>
         </nav>
         {% include 'partials/_alertas.html' %}
-        <form action="{% url 'clientes' %}">
-            <table class="table table-hover">
-                <thead class="table-danger text-danger">
-                    <div class="input-group mb-1">
-                        <input class="form-control" type="text" name="pesquisa_clientes" id="pesquisar" placeholder="Digite o nome da(o) cliente...">
-                        <input class="btn btn-danger" type="submit" value="Pesquisar">
-                    </div>
-                    <tr>
-                        <th scope="col">Foto</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Nascimento</th>
-                        <th scope="col">Telefone</th>
-                        <th scope="col">Peso</th>
-                        <th scope="col">Endereço</th>
-                        <th scope="col">Observação</th>
-                        <th scope="col" class="align-center">Ações</th>
-                    </tr>
-                </thead>
+        <form action="{% url 'clientes' %}"></form>
+            <div class="row">
                 {% for cliente in dados %}
-                <tbody>
-                    <tr>
-                        {% if cliente.foto == '' %}
-                            <td scope="row"><img src="{% static 'img/perfil.png' %}" style="max-width: 150px; " alt="Foto do cliente" class="img-fluid img-thumbnail"></td>
-                        {% else %}
-                            <td scope="row"><img src="{{ cliente.foto.url }}" style="max-width: 150px;" alt="Foto do cliente" class="img-fluid img-thumbnail"></td>
-                        {% endif %}
-                        <td scope="row" class="align-middle">{{cliente.nome}}</td>
-                        <td scope="row" class="align-middle">{{cliente.data_nascimento|date:"d/m/Y"}}</td>
-                        <td scope="row" class="align-middle">{{cliente.telefone}}</td>
-                        <td scope="row" class="align-middle">{{cliente.peso}}</td>
-                        <td scope="row" class="align-middle">{{cliente.endereco}}</td>
-                        <td scope="row" class="align-middle">{{cliente.obs}}</td>
-                        <td scope="row" class="align-middle">
-                            <a href="{% url 'deleta_cliente' cliente.id %}" type="button" class="btn btn-danger mb-1">Deletar</a>
-                            <a href="{% url 'edita_cliente' cliente.id %}" type="button" class="btn btn-secondary">Editar</a>
-                        </td>
-                    </tr>
-                </tbody>
+                <div class="col-sm-4">
+                    <div class="card mt-2 border-danger">
+                        <h5 class="card-header text-light bg-danger">{{cliente.nome}}</h5>
+                        <div class="card-body">
+                            <h5>
+                                <img src="{{ cliente.foto.url }}" alt="Foto do cliente" class="img-fluid">
+                            </h5>
+                            <h5 class="card-title">
+                                <i class="fas fa-calendar-day"></i>
+                                {{cliente.data_nascimento|date:"d/m/Y"}}
+                            </h5>
+                            <h5>
+                                <i class="fas fa-phone-square-alt"></i>
+                                {{cliente.telefone}}
+                            </h5>
+                            <h6 class="card-text">
+                                <i class="fas fa-ring"></i>
+                                {{cliente.estado_civil}}
+                            </h6>
+                            <h6 class="card-text">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{cliente.endereco}}
+                            </h6>
+                            <h6 class="card-text">
+                                <i class="fas fa-comment-alt"></i>
+                                {{cliente.obs}}
+                            </h6>
+                        </div>
+                        <div class="card-footer bg-transparent border-danger">
+                            <a href="#" class="btn btn-info mb-1">Anamnese</a>
+                            <a href="{% url 'edita_cliente' cliente.id %}" class="btn btn-secondary mb-1">Editar</a>
+                            <a href="{% url 'deleta_cliente' cliente.id %}" class="btn btn-danger mb-1">Deletar</a>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
-            </table>
+            </div>
         </form>
         {% include 'partials/_paginacao.html' %}
     </div>

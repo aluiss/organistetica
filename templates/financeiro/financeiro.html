@@ -13,14 +13,22 @@
             <div class="card-body row">
                 <div class="col">
                     <h3 class="card-title text-white fw-bold">
-                        {% if vendas_ano %}
-                            R$ {{vendas_ano.valor__sum}}
+                        {% if vendas_ano_recebidas %}
+                            R$ {{vendas_ano_recebidas.valor__sum}}
+                        {% else %}
+                            R$ 0
                         {% endif %}
                     </h3>
                     <h6 class="text-white">Recebido</h6>
                 </div>
                 <div class="col">
-                    <h3 class="card-title text-white fw-bold">R$5.000,00</h3>
+                    <h3 class="card-title text-white fw-bold">
+                        {% if vendas_ano_a_receber %}
+                            R${{ vendas_ano_a_receber.valor__sum }}
+                        {% else %}
+                            R$ 0
+                        {% endif %}
+                    </h3>
                     <h6 class="text-white">À receber</h6>
                 </div>
             </div>
@@ -30,14 +38,22 @@
             <div class="card-body row">
                 <div class="col">
                     <h3 class="card-title text-white fw-bold">
-                        {% if vendas_mes %}
-                            R$ {{vendas_mes.valor__sum}}
+                        {% if vendas_mes_recebidas %}
+                            R$ {{vendas_mes_recebidas.valor__sum}}
+                        {% else %}
+                            R$ 0
                         {% endif %}
                     </h3>
                     <h6 class="text-white">Recebido</h6>
                 </div>
                 <div class="col">
-                    <h3 class="card-title text-white fw-bold">R$2.500,00</h3>
+                    <h3 class="card-title text-white fw-bold">
+                        {% if vendas_mes_a_receber %}
+                            R$ {{vendas_mes_a_receber.valor__sum}}
+                        {% else %}
+                            R$ 0
+                        {% endif %}
+                    </h3>
                     <h6 class="text-white">À receber</h6>
                 </div>
             </div>
@@ -63,8 +79,6 @@
                     </td>
                 </tr>
                 {% endfor %}
-                
-            </tbody>          
                 <tr>
                     <td colspan="3">
                         <div class="input-group">
@@ -74,17 +88,16 @@
                         </div>
                     </td>
                 </tr>
+            </tbody>          
         </table>
         <ul class="col-md-5">
             <li class="list-group-item list-group-item-action d-flex bg-danger border-danger active" aria-current="true">TOTAL/MÊS POR SERVIÇO</li>
-            
                 {% for venda in vendas_serv_mes %}
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     {{venda.procedimento__procedimento}}
                     <span class="badge bg-danger">R${{venda.valor__sum}}</span>
                 </li>
                 {% endfor %}
-            
         </ul>
     </div>
 </div>

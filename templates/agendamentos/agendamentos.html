@@ -14,56 +14,55 @@
                 <input class="form-control" type="text" name="pesquisa_agendamento" placeholder="Digite o nome da(o) cliente...">
                 <input class="btn btn-danger" type="submit" value="Pesquisar">
             </div>
-        
-        <div class="row">
-            {% if dados %}
-                {% for agendamento in dados %} 
-                <div class="col-sm-4">
-                    {% if agendamento.cancelado == True %}
-                    <div class="card mt-2">
-                        <h5 class="card-header bg-secundary" name="cliente">{{agendamento.cliente}}</h5>
-                    {% else %}
-                    <div class="card mt-2 border-danger">
-                            <h5 class="card-header text-light bg-danger">{{agendamento.cliente}}</h5>
-                    {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <i class="fas fa-calendar-day"></i>
-                                {{agendamento.start}}
-                            </h5>
-                            <h5>
-                                <i class="far fa-clock"></i>
-                                {{agendamento.hora}}hs.
-                            </h5>
-                            <h6 class="card-text">
-                                <i class="fas fa-procedures"></i>
-                                {{agendamento.procedimento}}
-                            </h6>
-                            <h6 class="card-text">
-                                <i class="fas fa-comment-alt"></i>
-                                {{agendamento.obs_agenda}}
-                            </h6>
-                            <p class="card-text">
-                                <i class="fas fa-map-marker-alt"></i>
-                                {{agendamento.local_atendimento}}
-                            </p>
-                        </div>
+            <div class="row">
+                {% if dados %}
+                    {% for agendamento in dados %} 
+                    <div class="col-sm-4">
                         {% if agendamento.cancelado == True %}
-                        <div class="card-footer">
-                            <input class="btn btn-secondary disabled" type="submit" value="CANCELAR">
+                        <div class="card mt-2">
+                            <h5 class="card-header bg-secundary" name="cliente">{{agendamento.cliente}}</h5>
                         {% else %}
-                        <div class="card-footer bg-transparent border-danger">
-                            <a href=" {% url 'cancela_agendamento' agendamento.id %} " class="btn btn-danger">CANCELAR</a>
-                            <a href="{% url 'altera_agendamento' agendamento.id %}" class="btn btn-danger">ALTERAR</a>
+                        <div class="card mt-2 border-danger">
+                                <h5 class="card-header text-light bg-danger">{{agendamento.cliente}}</h5>
                         {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-calendar-day"></i>
+                                    {{agendamento.start}}
+                                </h5>
+                                <h5>
+                                    <i class="far fa-clock"></i>
+                                    {{agendamento.hora}}hs.
+                                </h5>
+                                <h6 class="card-text">
+                                    <i class="fas fa-procedures"></i>
+                                    {{agendamento.procedimento}}
+                                </h6>
+                                <h6 class="card-text">
+                                    <i class="fas fa-comment-alt"></i>
+                                    {{agendamento.obs_agenda}}
+                                </h6>
+                                <p class="card-text">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    {{agendamento.local_atendimento}}
+                                </p>
+                            </div>
+                            {% if agendamento.cancelado == True %}
+                            <div class="card-footer">
+                                <input class="btn btn-secondary disabled" type="submit" value="CANCELAR">
+                            {% else %}
+                            <div class="card-footer bg-transparent border-danger">
+                                <a href=" {% url 'cancela_agendamento' agendamento.id %} " class="btn btn-danger">CANCELAR</a>
+                                <a href="{% url 'altera_agendamento' agendamento.id %}" class="btn btn-danger">ALTERAR</a>
+                            {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                {% endfor %}
-            {% else %}
-                <h1 class="text-danger self-align-center">Nenhum agendamento feito.</h1>
-            {% endif %}
-        </div>
+                    {% endfor %}
+                {% else %}
+                    <h1 class="text-danger self-align-center">Nenhum agendamento feito.</h1>
+                {% endif %}
+            </div>
         </form>
         {% include 'partials/_paginacao.html' %}
     </div>
