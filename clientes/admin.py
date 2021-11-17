@@ -1,8 +1,9 @@
 from django.contrib import admin
-from .models import Clientes
+from .models import Anamnese, Clientes
 
 class ListaClientes(admin.ModelAdmin):
     list_display = ('nome', 'data_nascimento', 'endereco')
     search_fields = ('nome', 'endereco')
 
 admin.site.register(Clientes, ListaClientes)
+admin.site.register(Anamnese)

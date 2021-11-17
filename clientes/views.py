@@ -87,7 +87,6 @@ def clientes(request):
         cliente_pesquisado = request.GET['pesquisa_clientes']
         if 'clientes':
             clientes_por_pagina = clientes.filter(nome__icontains=cliente_pesquisado)
-    
     dados = {
         'dados' : clientes_por_pagina,
     }

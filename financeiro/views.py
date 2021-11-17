@@ -25,23 +25,18 @@ def mesAtual():
     return date.today().month
 def anoAtual():
     return date.today().year
-
 def vendasServicoMes():
     vendas = Vendas.objects.values('procedimento__procedimento').annotate(Sum('valor')).filter(data_venda__month=mesAtual()).order_by('-valor__sum')
     return vendas
-
 def vendasMesRecebido():
     vendas = Vendas.objects.all().filter(pago=True, data_venda__month=mesAtual()).aggregate(Sum('valor'))
     return vendas
-
 def vendasMesAReceber():
     vendas = Vendas.objects.all().filter(pago=False, data_venda__month=mesAtual()).aggregate(Sum('valor'))
     return vendas
-
 def vendasAnoRecebido():
     vendas = Vendas.objects.all().filter(pago=True, data_venda__year=anoAtual()).aggregate(Sum('valor'))
     return vendas
-
 def vendasAnoAReceber():
     vendas = Vendas.objects.all().filter(pago=False, data_venda__year=anoAtual()).aggregate(Sum('valor'))
     return vendas
