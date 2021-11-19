@@ -4,7 +4,7 @@ from django.db.models import Count
 from .models import Clientes
 from agendamentos.models import Agendamento
 from datetime import date
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.paginator import Paginator
 
 def index(request):
     #lista todos os clientes por ordem de cadastro
@@ -97,11 +97,24 @@ def cadastra_cliente(request):
     if request.method == 'POST':
         nome = request.POST['nome']
         telefone = request.POST['telefone']
+        email = request.POST['email']
+        rg = request.POST['rg']
+        cpf = request.POST['cpf']
+        sexo = request.POST['sexo']
+        estado_civil = request.POST['estado_civil']
         nascimento = request.POST['nascimento']
-        altura = request.POST['altura']
-        peso = request.POST['peso']
         endereco = request.POST['endereco']
+        cep = request.POST['cep']
         obs = request.POST['observacao']
+        #Verifica se o sexo é masculino para trocar o estado civil
+        if request.POST['sexo'] == 'ms' and request.POST['estado_civil'] == 'sta':
+            estado_civil = 'st'
+        elif request.POST['sexo'] == 'ms' and request.POST['estado_civil'] == 'csa':
+            estado_civil = 'cs'
+        elif request.POST['sexo'] == 'ms' and request.POST['estado_civil'] == 'dva':
+            estado_civil = 'dv'
+        elif request.POST['sexo'] == 'ms' and request.POST['estado_civil'] == 'vva':
+            estado_civil = 'vv'
         #Verificar se foi selecionada uma foto para upload
         if not request.FILES:
             foto = 'perfil.png'
@@ -114,11 +127,11 @@ def cadastra_cliente(request):
         if campo_vazio(nascimento):
             messages.error(request, 'Favor digitar a data de nascimento da(o) cliente!')
             return redirect('clientes')
-        if not altura:
-            messages.error(request, 'Favor digitar a altura da(o) cliente!')
+        if not rg:
+            messages.error(request, 'Favor digitar o RG da(o) cliente!')
             return redirect('clientes')
-        if not peso:
-            messages.erro(request, 'Favor digitar o peso da(o) cliente!')
+        if not cpf:
+            messages.erro(request, 'Favor digitar o CPF da(o) cliente!')
             return redirect('clientes')
         if campo_vazio(endereco):
             messages.error(request, 'Favor digitar o endereço da(o) cliente!')
@@ -130,16 +143,20 @@ def cadastra_cliente(request):
         cliente = Clientes.objects.create(
             nome = nome,
             telefone = telefone,
+            email = email,
             data_nascimento = nascimento,
-            altura = altura,
-            peso = peso,
+            rg = troca_sinal(rg),
+            cpf = troca_sinal(cpf),
+            sexo = sexo,
+            estado_civil = estado_civil,
             endereco = endereco,
+            cep = cep,
             obs = obs,
             foto = foto
         )
         #salva o novo cliente no banco de dados
         cliente.save()
-        messages.success(request, 'Cliente cadastrada(o) com sucesso!')
+        messages.success(request, nome +', cadastrada(o) com sucesso!')
         #Redireciona para a página 'clientes'
         return redirect('clientes')
     #Renderiza a página de clientes
