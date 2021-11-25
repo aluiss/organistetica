@@ -11,10 +11,10 @@
                 <tr>
                     <td colspan="3">
                         <label class="form-label" for="cliente">Cliente:</label>
-                        <select  class="form-select" name="cliente">
-                            <option>Selecione a(o) cliente</option>
+                        <select  class="form-select form-select-sm" name="cliente" aria-label=".form-select.sm" required>
+                            <option class="text-secondary" selected>Selecione...</option>
                             {% for cliente in clientes %}
-                                <option class="text-danger" value="{{cliente.id}}">
+                                <option value="{{cliente.id}}">
                                     {{ cliente.nome }}
                                 </option>
                             {% endfor %}
@@ -22,16 +22,16 @@
                     </td>
                     <td>
                         <label class="form-label" for="cor">Cor</label>
-                        <input type="color" name="cor" class="form-control form-control-color">
+                        <input type="color" name="cor" class="form-control form-control-color form-control-sm">
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label class="form-label" for="procedimento">Procedimento</label>
-                        <select class="form-select" name="procedimento">
-                            <option>Selecione o procedimento</option>
+                        <select class="form-select form-select-sm" name="procedimento" aria-label=".form-select.sm" required>
+                            <option class="text-secondary" selected>Selecione...</option>
                             {% for procedimento in procedimentos %}
-                                <option>
+                                <option value="{{procedimento.id}}">
                                     {{procedimento.procedimento}}
                                 </option>
                             {% endfor %}
@@ -39,10 +39,10 @@
                     </td>
                     <td colspan="3">
                         <label class="form-label" for="local">Local</label>
-                        <select name="local" class="form-select">
-                            <option>Selecione o local</option>
+                        <select class="form-select form-select-sm" name="local" aria-label=".form-select.sm" required>
+                            <option class="text-secondary" selected>Selecione...</option>
                             {% for local in locais %}
-                                <option value="{{local.id}}" class="text-danger">
+                                <option value="{{local.id}}">
                                     {{local.local}}
                                 </option>
                             {% endfor %}
@@ -50,31 +50,31 @@
                     </td>
                 </tr>
                 <tr>
-                    
                     <td colspan="2">
+                        {% now "SHORT_DATE_FORMAT" as hoje %}
                         <label class="form-label" for="data">Data</label>
-                        <input type="date" name="data" class="form-control">
+                        <input type="date" name="data" class="form-select form-select-sm" required>
                     </td>
                     <td>
                         <label class="form-label" for="hora">Hora</label>
-                        <input type="time" name="hora" class="form-control">
+                        <input type="time" name="hora" class="form-control form-control-sm" required>
                     </td>
                     <td style="max-width: 30px;">
                         <label class="form-label" for="sessoes">Seções</label>
-                        <input class="form-control" type="number" name="sessoes" min="1" required>
+                        <input class="form-control form-control-sm" type="number" name="sessoes" min="1" required>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="4">
                         <label class="form-label" for="observacao">Observação</label>
-                        <textarea name="observacao" id="" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea name="observacao" id="" cols="30" rows="10" class="form-control form-control-sm"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <input type="submit" value="Agendar" class="btn btn-danger">
-                        <input type="reset" value="Limpar" class="btn btn-danger">
-                        <a href="{% url 'agendamentos' %}" class="btn btn-danger">Cancelar</a>
+                        <input type="submit" value="Agendar" class="btn btn-sm btn-danger">
+                        <input type="reset" value="Limpar" class="btn btn-sm btn-danger">
+                        <a href="{% url 'agendamentos' %}" class="btn btn-sm btn-danger">Cancelar</a>
                     </td>
                 </tr>
             </table>

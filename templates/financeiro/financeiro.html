@@ -74,8 +74,8 @@
                     <td class="align-middle"> {{ procedimento.procedimento }} </td>
                     <td class="align-middle text-center"> R$ {{ procedimento.valor|floatformat:2}} </td>
                     <td class="align-middle text-center">
-                        <a class="btn btn-info btn-sm" href="#"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger btn-sm" href="#"><i class="fas fa-trash"></i></a>
+                        <a class="btn btn-info btn-sm" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Atualizar valor"><i class="fas fa-sync-alt"></i></a>
+                        <a class="btn btn-danger btn-sm" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir procedimento"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -101,5 +101,4 @@
         </ul>
     </div>
 </div>
-
 {% endblock %}

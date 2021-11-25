@@ -49,11 +49,11 @@
                             </div>
                             {% if agendamento.cancelado == True %}
                             <div class="card-footer">
-                                <input class="btn btn-secondary disabled" type="submit" value="CANCELAR">
+                                <a href="#" class="btn btn-sm btn-secondary disabled" type="submit"><i class="far fa-calendar-times"></i></a>
                             {% else %}
                             <div class="card-footer bg-transparent border-danger">
-                                <a href=" {% url 'cancela_agendamento' agendamento.id %} " class="btn btn-danger">CANCELAR</a>
-                                <a href="{% url 'altera_agendamento' agendamento.id %}" class="btn btn-danger">ALTERAR</a>
+                                <a href=" {% url 'cancela_agendamento' agendamento.id %} " class="btn btn-sm btn-danger"  data-bs-toggle="tooltip" data-bs-placement="top" title="Cancelar agendamento"><i class="far fa-calendar-times"></i></a>
+                                <a href="{% url 'altera_agendamento' agendamento.id %}" class="btn btn-sm btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Alterar agendamento"><i class="fas fa-edit"></i></a>
                             {% endif %}
                             </div>
                         </div>

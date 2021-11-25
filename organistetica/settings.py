@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'agendamentos',
     'locaisAtendimentos',
     'procedimentos',
-    'financeiro'
+    'financeiro',
 ]
 
 MIDDLEWARE = [

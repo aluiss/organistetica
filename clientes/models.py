@@ -26,7 +26,7 @@ class Clientes(models.Model):
     telefone = models.CharField(max_length=15)
     data_nascimento = models.DateField()
     foto = models.ImageField(upload_to='fotos/', blank=True)
-    obs = models.TextField(max_length=400, blank=True)
+    obs = models.TextField(max_length=400, default="Nenhuma", blank=True)
     endereco = models.CharField(max_length=300)
     cep = models.TextField(max_length=9)
     sexo = models.TextField(max_length=2, choices=sexo_escolha, default='fm')

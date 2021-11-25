@@ -10,9 +10,10 @@ class Agendamento(models.Model):
     start = models.DateField()
     hora = models.TimeField()
     cor = models.CharField(max_length=10)
-    obs_agenda = models.TextField()
+    obs_agenda = models.TextField(default="Nenhuma")
     sessoes = models.IntegerField()
     cancelado = models.BooleanField(default=False)
+    realizado = models.BooleanField(default=False)
 
     def __str__(self):
         return self.cliente.nome

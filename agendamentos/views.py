@@ -1,7 +1,7 @@
 from django.contrib import messages
-from django.contrib.messages.api import error
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
+from datetime import datetime
 from .models import Agendamento
 from .models import Clientes
 from .models import LocaisAtendimento
@@ -9,7 +9,6 @@ from .models import Procedimento
 
 def agendamentos(request):
     agendamentos = Agendamento.objects.select_related('cliente').order_by('-start')
-
     #Paginação
     paginator = Paginator(agendamentos, 12)
     page = request.GET.get('page')
@@ -34,7 +33,7 @@ def cria_agendamento(request):
     if request.method == 'POST':
         cliente = request.POST['cliente']
         cor = request.POST['cor']
-        procedimento = Procedimento.objects.values('id').filter(procedimento=request.POST['procedimento'])
+        procedimento = request.POST['procedimento']
         local = request.POST['local']
         data = request.POST['data']
         hora = request.POST['hora']
@@ -45,6 +44,22 @@ def cria_agendamento(request):
             messages.error(request, 'Já existe um agendamento neste dia e horário.')
             return redirect('cria_agendamento')
 
+        if verifica_select_invalido(cliente):
+            messages.error(request, 'Selecione o cliente que será atendido, por favor!')
+            return redirect('cria_agendamento')
+        
+        if verifica_select_invalido(procedimento):
+            messages.error(request, 'Selecione o procedimento que será executado.')
+            return redirect('cria_agendamento')
+        
+        if verifica_select_invalido(local):
+            messages.error(request, 'Selecione o local do atendimento.')
+            return redirect('cria_agendamento')
+
+        if verifica_data_antiga(data, hora):
+            messages.error(request, 'Não pode agendar para um dia ou horário anterior a agora.')
+            return redirect('cria_agendamento')
+
         if campo_vazio(data):
             messages.error(request, 'Não foi definida uma data para o agendamento.')
             return redirect('cria_agendamento')
@@ -52,9 +67,9 @@ def cria_agendamento(request):
         if campo_vazio(hora):
             messages.error(request, 'Não foi definido um horário para o agendamento.')
             return redirect('cria_agendamento')
-        
+
         if campo_vazio(sessoes):
-            messages,error(request, 'O atendimento terá quantas seções?')
+            messages.error(request, 'O atendimento terá quantas seções?')
             return redirect('cria_agendamento')
 
         agendamento = Agendamento.objects.create(
@@ -73,13 +88,26 @@ def cria_agendamento(request):
     dados = {
         'clientes' : clientes,
         'procedimentos' : procedimentos,
-        'locais' : localatendimento
+        'locais' : localatendimento,
     }
     return render(request, 'agendamentos/cria_agendamento.html', dados)
 
 #Verifica se um determinado campo está vazio
 def campo_vazio(campo):
     return not campo.strip()
+#Verifica se um select está com a opção 'Selecione..' selecionada
+def verifica_select_invalido(select):
+    if select == 'Selecione...' or True:
+        return True
+#Verifica se a data de agendamento é anterior a data e hora atual.
+def verifica_data_antiga(data, hora):
+    if data and hora:
+        data_hora = datetime.strptime(data + ' ' + hora + ':00', '%Y-%m-%d %H:%M:%S')
+        hoje = datetime.now()
+        
+        if hoje > data_hora:
+            return True
+        return False
 
 def altera_agendamento(request, agendamento_id):
     clientes = Clientes.objects.all()

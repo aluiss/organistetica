@@ -178,21 +178,28 @@ def atualiza_cliente(request):
         id_cliente = request.POST['id_cliente']
         cli = Clientes.objects.get(pk=id_cliente)
         cli.nome = request.POST['nome']
+        cli.email = request.POST['email']
         cli.telefone = request.POST['telefone']
+        cli.rg = troca_sinal(request.POST['rg'])
+        cli.cpf = troca_sinal(request.POST['cpf'])
         if 'nascimento' in request.POST:
             cli.data_nascimento = request.POST['nascimento']
         else:
             cli.data_nascimento = cli.data_nascimento
-        altura = request.POST['altura']
-        altura = troca_sinal(altura)
-        cli.altura = altura
-        peso = request.POST['peso']
-        peso = troca_sinal(peso)
-        cli.peso = peso
         cli.endereco = request.POST['endereco']
+        cli.cep = request.POST['cep']
+        cli.sexo = request.POST['sexo']
         cli.obs = request.POST['observacao']
         if 'foto' in request.FILES:
             cli.foto = request.FILES['foto']
+        if request.POST['sexo'] == 'ms' and request.POST['estado_civil'] == 'sta':
+            cli.estado_civil = 'st'
+        elif request.POST['sexo'] == 'ms' and request.POST['estado_civil'] == 'csa':
+            cli.estado_civil = 'cs'
+        elif request.POST['sexo'] == 'ms' and request.POST['estado_civil'] == 'dva':
+            cli.estado_civil = 'dv'
+        elif request.POST['sexo'] == 'ms' and request.POST['estado_civil'] == 'vva':
+            cli.estado_civil = 'vv'
         cli.save()
     messages.success(request, 'Cliente ' + cli.nome + ' alterada(o) com sucesso!')
     return redirect('clientes')
