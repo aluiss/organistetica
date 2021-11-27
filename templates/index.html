@@ -6,10 +6,10 @@
     {% include 'partials/_menu.html' %}
     {% include 'partials/_dashboard.html' %}
     {% include 'partials/_calendario.html' %}
-    <!-- Ranking de clientes agendados -->
     <section class="container-lg mt-3">
         <div class="container-fluid d-xl-flex justify-content-between">
-            <div class="">
+            <!-- Ranking de clientes agendados -->
+            <div>
                 <div class="input-group" style="min-width: 440px;">
                     <h4 class="text-danger">TOP AGENDAMENTOS</h4>
                 </div>
@@ -32,12 +32,12 @@
                         {% else %}
                             <img class="card-img-top" src="{{ cliente.foto.url }}" alt="Fotografia">
                         {% endif %}
-                        <h5 class="card-header text-danger">{{ cliente.nome }}</h5>
+                        <h6 class="card-header text-danger fw-bold">{{ cliente.nome }}</h6>
                         <ul class="list-group">
                             <li class="list-group-item list-group-item-action"><i class="fas fa-user-clock"></i> {{ idade }} anos </li>
                             <li class="list-group-item list-group-item-action"><i class="fas fa-phone-square-alt"></i> {{ cliente.telefone }}</li>
                             <li class="list-group-item list-group-item-action"><i class="fas fa-at"></i> {{ cliente.email }}</li>
-                            <li class="list-group-item list-group-item-action"><i class="fas fa-calendar-day"></i> {{ cliente.data_nascimento }}</li>
+                            <li class="list-group-item list-group-item-action"><i class="fas fa-calendar-day"></i> {{ cliente.data_nascimento|date:'d/M/Y' }}</li>
                             <li class="list-group-item list-group-item-action"><i class="fas fa-comment-alt"></i> {{ cliente.obs }} </li>
                             <li class="list-group-item text-muted"><i class="fas fa-map-marker-alt"></i> {{ cliente.endereco }}</li>
                         </ul>

@@ -97,7 +97,7 @@ def campo_vazio(campo):
     return not campo.strip()
 #Verifica se um select está com a opção 'Selecione..' selecionada
 def verifica_select_invalido(select):
-    if select == 'Selecione...' or True:
+    if select == 'Selecione...':
         return True
 #Verifica se a data de agendamento é anterior a data e hora atual.
 def verifica_data_antiga(data, hora):

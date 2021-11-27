@@ -32,7 +32,7 @@
                             <option class="text-secondary" selected>Selecione...</option>
                             {% for procedimento in procedimentos %}
                                 <option value="{{procedimento.id}}">
-                                    {{procedimento.procedimento}}
+                                    {{procedimento.procedimento}} - {{procedimento.valor}}
                                 </option>
                             {% endfor %}
                         </select>
@@ -51,7 +51,6 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        {% now "SHORT_DATE_FORMAT" as hoje %}
                         <label class="form-label" for="data">Data</label>
                         <input type="date" name="data" class="form-select form-select-sm" required>
                     </td>
