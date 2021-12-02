@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Count
-from .models import Clientes
+
+from .forms import AnamneseForm
+from .models import Clientes, Anamnese
 from agendamentos.models import Agendamento
 from datetime import date
 from django.core.paginator import Paginator
@@ -91,6 +93,15 @@ def clientes(request):
         'dados' : clientes_por_pagina,
     }
     return render(request, 'clientes.html', dados)
+
+def anamnese(request, cliente_id):
+    cliente = get_object_or_404(Clientes, pk=cliente_id)
+    form = AnamneseForm()
+    dados_cliente = {
+        'form' : form,
+        'cliente' : cliente,
+        }
+    return render(request, 'cliente/anamnese.html', dados_cliente)
 
 def cadastra_cliente(request):
     #Armazena as informações do form em variáveis

@@ -7,7 +7,7 @@
         {% include 'partials/_alertas.html' %}
         <form action="{% url 'cadastra_cliente' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <table class="table">
+            <table class="table table-sm">
                 <tr>
                     <td>
                         <label class="form-label" for="nome">Nome</label>
