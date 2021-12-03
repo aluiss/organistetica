@@ -1,37 +1,39 @@
 {% extends 'base.html' %}
-{% load static %}
-
 {% block content %}
 {% include 'partials/_menu.html' %}
-    <div class="container-lg justify-content-between">
-        <div class="card shadow rounded border">
-            <div class="row g-0">
-                <div class="col-md-3">
-                    <img src="{{cliente.foto.url}}" class=" rounded" alt="Fotografia do cliente." style="max-width: 17rem;">
+    <div class="container-lg">
+        <div class="card border-0 bg-light mb-3 shadow-sm">
+            <div class="row g-0 p-2">
+                <div class="col-sm-2 text-center" style="align-self: center;">
+                    <img src="{{cliente.foto.url}}" class="img-fluid img-thumbnail rounded-circle" alt="Fotografia do cliente.">
                 </div>
-                <div class="col-md-5 border-end">
-                    <ul class="m-2 list-unstyled">
-                        <h4 class="fw-bold text-danger">{{cliente.nome}}</h4>
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Data de nascimento"><i class="fas fa-user-clock"></i> {{cliente.data_nascimento|date:'d/m/Y'}} </li>
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Estado civil"><i class="fas fa-ring"></i> {{cliente.get_estado_civil_display}} </li>
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Sexualidade"><i class="fas fa-venus-mars"></i> {{cliente.get_sexo_display}} </li>
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Endereço"><i class="fas fa-map-marker-alt"></i> {{cliente.endereco}} </li>
-                    </ul>
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">{{cliente.nome}}</h5>
+                        <ul class="list-unstyled">
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Data de nascimento"><i class="fas fa-user-clock"></i> {{cliente.data_nascimento|date:'d/m/Y'}} </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Estado civil"><i class="fas fa-ring"></i> {{cliente.get_estado_civil_display}} </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Sexualidade"><i class="fas fa-venus-mars"></i> {{cliente.get_sexo_display}} </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Endereço"><i class="fas fa-map-marker-alt"></i> {{cliente.endereco}} </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-3 ms-2">
-                    <ul class="list-unstyled mt-2">
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Telefone"><i class="fas fa-phone-square-alt"></i> {{cliente.telefone}} </li>
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="E-mail"><i class="fas fa-at"></i> {{cliente.email}} </li>
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="Identidade"><i class="far fa-id-card"></i> {{cliente.rg}} </li>
-                        <li data-bs-toggle="tooltip" data-bs-placement="top" title="CPF"><i class="fas fa-id-card"></i> {{cliente.cpf}} </li>
-                    </ul>
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Identidade"><i class="far fa-id-card"></i> {{cliente.rg}} </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="CPF"><i class="fas fa-id-card"></i> {{cliente.cpf}} </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Telefone"><i class="fas fa-phone-square-alt"></i> {{cliente.telefone}} </li>
+                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Endereço de e-mail"><i class="fas fa-at"></i> {{cliente.email}} </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+          </div>
         <form action="POST">
             <fieldset class="mt-3">
                 <legend class="ms-2 text-danger">Anamnese</legend>
-                {{ form.as_ul }}
+                {{form.as_ul}}
             </fieldset>
         </form>
     </div>
